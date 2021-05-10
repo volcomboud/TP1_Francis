@@ -13,5 +13,7 @@ public:
     Hydro(float debit, int cout);
     double calcul(int jour);
     ~Hydro();
+    int getCout();
+
 };
 

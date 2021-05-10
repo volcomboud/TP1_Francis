@@ -21,4 +21,7 @@ double Location::calcul(int mois) { // 1 mois par défaut
 	return prixCalc;
 
 }
+int Location::getCout() {
+	return this->cout;
+}
 

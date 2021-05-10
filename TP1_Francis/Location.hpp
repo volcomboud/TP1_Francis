@@ -11,5 +11,6 @@ public:
     Location(int espaceReq, int cout);
     double calcul(int jour);
     ~Location();
+    int getCout();
 };
 

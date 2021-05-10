@@ -12,5 +12,6 @@ public:
     Electricity(int amperage, int voltage, int cout);
     double calcul(int jour);
     ~Electricity();
+    int getCout();
 };
 

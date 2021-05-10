@@ -26,3 +26,6 @@ double Electricity::calcul(int jour) {
 	return prixCalc;
 
 }
+int Electricity::getCout() {
+	return this->cout;
+}

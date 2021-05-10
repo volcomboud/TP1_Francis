@@ -22,3 +22,6 @@ double Hydro::calcul(int jour) {
 	return prixCalc;
 
 }
+int Hydro::getCout() {
+	return this->cout;
+}
