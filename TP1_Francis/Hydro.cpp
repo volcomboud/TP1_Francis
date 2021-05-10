@@ -18,6 +18,7 @@ double Hydro::calcul(int jour) {
 	double prixCalc;
 	prixCalc = this->debit * 86400.0 * jour * ((this->cout) / 100.0);
 
+	this->prix = prixCalc;
 	return prixCalc;
 
 }

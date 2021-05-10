@@ -20,8 +20,9 @@ Electricity::~Electricity() {
 double Electricity::calcul(int jour) {
 	double prixCalc;
 	
-	prixCalc = ((this->amperage * this->voltage)*this->amperage * 24.0 * jour * this->cout)/1000;
+	prixCalc = (((double)this->amperage * this->voltage)*this->amperage * 24.0 * jour * this->cout)/1000;
 
+	this->prix = prixCalc;
 	return prixCalc;
 
 }

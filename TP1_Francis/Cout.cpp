@@ -11,5 +11,8 @@ void Cout::setCout(int cout) {
 Cout::~Cout() {
 
 }
+double Cout::getPrix() {
+	return this->prix;
+}
 
 
