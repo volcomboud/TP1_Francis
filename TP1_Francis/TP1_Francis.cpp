@@ -56,6 +56,11 @@ int main()
 	delete ptr_cout1;
 	delete ptr_cout2;
 	delete ptr_cout3;
+	for (int i = 0; i < indexLivret; i++)
+	{
+		delete ptr_livretCout[i];
+	}
+
 }
 
 //===============================Core Functions=============================================================
