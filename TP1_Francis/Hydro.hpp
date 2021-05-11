@@ -4,8 +4,7 @@
 #include "Cout.h"
 
 class Hydro :
-    public Cout
-{
+    public Cout{
 private:
     float debit;
 

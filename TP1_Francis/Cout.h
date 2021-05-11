@@ -4,7 +4,7 @@ class Cout
 protected:
 	int cout; // (prix location 30 jours en cents; cents/KwH; cents/L )
 	double prix;  //prix calculé par la fonction Calcul()
-	//static int compteur;
+	static int compteur;
 public:
 	Cout();
 	Cout(int cout);
@@ -12,7 +12,7 @@ public:
 	void setCout(int cout);
 	virtual ~Cout();
 	double getPrix();
-	void increCompteur();
 	virtual int getCout() = 0;
+	int getCompteur();
 };
 
