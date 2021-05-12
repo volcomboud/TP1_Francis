@@ -8,8 +8,8 @@ private:
     
 
 public:
-    Location(int espaceReq, int cout);
-    double calcul(int jour);
+    Location(int espaceReq, int cout, std::string nom);
+    double calcul();
     ~Location();
     int getCout();
 };

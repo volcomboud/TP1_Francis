@@ -12,13 +12,14 @@ int Cout::compteur = 0;
 Cout::Cout() {
 	this->compteur++;
 }
-Cout::Cout(int cout) {
-	this->cout = cout;
+Cout::Cout(int cout, std::string nom) {
+	this->taux = cout;
+	this->nom = nom;
 	this->compteur++;
 }
 
 void Cout::setCout(int cout) {
-	this->cout = cout;
+	this->taux = cout;
 }
 Cout::~Cout() {
 
@@ -30,8 +31,15 @@ int Cout::getCompteur() {
 	return this->compteur;
 }
 
-//int Cout::getCout() {
-//	return this->out;
-//}
+std::string Cout::getNom() {
+	return this->nom;
+}
+std::string Cout::getType() {
+	return this->type;
+}
+
+
+
+
 
 

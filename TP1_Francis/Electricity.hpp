@@ -1,4 +1,7 @@
 #pragma once
+
+
+
 #include "Cout.h"
 
 class Electricity :
@@ -9,8 +12,8 @@ private:
     int amperage;
 
 public:
-    Electricity(int amperage, int voltage, int cout);
-    double calcul(int jour);
+    Electricity(int amperage, int voltage, int cout, std::string nom);
+    double calcul();
     ~Electricity();
     int getCout();
 };

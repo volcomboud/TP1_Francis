@@ -3,25 +3,29 @@
 
 #include "Hydro.hpp"
 
-Hydro::Hydro(float debit, int cout) :
-	Cout()
+Hydro::Hydro(float debit, int cout, std::string nom) :
+	Cout(cout, nom)
 {
 	this->debit = debit;
-	setCout(cout);
+	this->type = "Eau";
+	this->prix = calcul();
+
+
+	//setCout(cout);
 
 }
 
 Hydro::~Hydro(){
 
 }
-double Hydro::calcul(int jour) {
+double Hydro::calcul() {
 	double prixCalc;
-	prixCalc = this->debit * 86400.0 * jour * ((this->cout) / 100.0);
+	prixCalc = this->debit * 86400.0 * 1.0 * ((this->taux) / 100.0);
 
 	this->prix = prixCalc;
 	return prixCalc;
 
 }
 int Hydro::getCout() {
-	return this->cout;
+	return this->taux;
 }

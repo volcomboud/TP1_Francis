@@ -1,27 +1,29 @@
 #include "Location.hpp"
 
-Location::Location(int espaceReq, int cout) :
-	Cout()
+Location::Location(int espaceReq, int cout, std::string nom) :
+	Cout(cout, nom)
 {
 	this->espaceReq = espaceReq;
-	setCout(cout);
+	this->type = "Location";
+	this->prix = calcul();
+
+
+	//setCout(cout);
 }
 
 Location::~Location() {
 
 }
-double Location::calcul(int mois) { // 1 mois par défaut
+double Location::calcul() { // 1 mois par défaut
 	double prixCalc;
 
-	if (mois < 1)mois = 1;
-
-	prixCalc = ((double)this->cout * mois * 30.0 * this->espaceReq)/ 100.0;
+	prixCalc = ((double)this->taux * 1.0 * 30.0 * this->espaceReq)/ 100.0;
 
 	this->prix = prixCalc;
 	return prixCalc;
 
 }
 int Location::getCout() {
-	return this->cout;
+	return this->taux;
 }
 

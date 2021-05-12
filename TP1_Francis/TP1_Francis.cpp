@@ -1,10 +1,13 @@
 #include <iostream>
+#include <limits>
+#include <ios>
 
 #include "Cout.h"
 #include "Hydro.hpp"
 #include "Electricity.hpp"
 #include "Location.hpp"
 
+void cinChecked();
 void coutLocation(Cout* ptr_livret[250], int& index);
 void coutElectricity(Cout* ptr_livret[250], int& index);
 void coutHydro(Cout* ptr_livret[250], int& index);
@@ -13,76 +16,177 @@ void messageErreur();
 int menuPrinc();
 void continuer();
 
-int main(){
-
+int main() {
 	double prix;
-	Hydro* ptr_cout1 = new Hydro(1, 50);
-	Electricity* ptr_cout2 = new Electricity(2, 50, 2);
-	Location* ptr_cout3 = new Location(10, 50);
 	Cout* ptr_livretCout[250];
 	int indexLivret = 0;
 	int choix = -1;
+	bool quitter = false;
 
-	prix = ptr_cout1->calcul(1);
+	/*coutLocation(ptr_livretCout, indexLivret);
+	
+	indexLivret = (ptr_livretCout[0]->getCompteur()) ;
 
-	prix = ptr_cout2->calcul(1);
-
-	prix = ptr_cout3->calcul(1);
-
-	coutLocation(ptr_livretCout, indexLivret);
-	std::cout << ptr_livretCout[indexLivret - 1]->getCout() << std::endl;
-	std::cout << indexLivret << std::endl;
 
 	coutElectricity(ptr_livretCout, indexLivret);
-	std::cout << ptr_livretCout[indexLivret - 1]->getCout() << std::endl;
-	std::cout << indexLivret << std::endl;
+	indexLivret = (ptr_livretCout[0]->getCompteur()) ;
 
 	coutHydro(ptr_livretCout, indexLivret);
-	std::cout << ptr_livretCout[indexLivret - 1]->getCout() << std::endl;
-	std::cout << indexLivret << std::endl;
+	indexLivret = (ptr_livretCout[0]->getCompteur()) ;*/
 
-	for (int i = 0; i < indexLivret; i++)
-		std::cout << ptr_livretCout[i]->getCout() << std::endl;
 
-	//std::cout << prix << std::endl;
+	do {
+		std::cout << indexLivret << std::endl;
+		indexLivret = (ptr_livretCout[0]->getCompteur());
+		std::cout << indexLivret << std::endl;
+		std::cout << ptr_livretCout[0]->getCompteur() << std::endl;
 
-	std::cout << ptr_cout1->getCompteur()<<std::endl;
-	std::cout << ptr_cout2->getCompteur() << std::endl;
-	//std::cout << ptr_cout3->getPrix() << std::endl;
-	continuer();
-	choix = menuPrinc();
+		for (int i = 0; i < indexLivret; i++) {
+			std::cout << "=======================================================" << std::endl;
+			std::cout << ptr_livretCout[i]->getNom() << std::endl;
+			std::cout << ptr_livretCout[i]->getCout() << std::endl;
+			std::cout << ptr_livretCout[i]->getType() << std::endl;
+			std::cout << ptr_livretCout[i]->getPrix() << std::endl;
+		}
 
-	delete ptr_cout1;
-	delete ptr_cout2;
-	delete ptr_cout3;
-	for (int i = 0; i < indexLivret; i++) {
+		continuer();
+		choix = menuPrinc();
+
+		switch (choix) {
+		case 1:
+			coutLocation(ptr_livretCout, indexLivret);
+			break;
+		case 2:
+			coutElectricity(ptr_livretCout, indexLivret);
+			break;
+		case 3:
+			coutHydro(ptr_livretCout, indexLivret);
+			break;
+		case 0:
+			quitter = true;
+			break;
+		default:
+			messageErreur;
+			break;
+		}
+
+
+	} while (!quitter);
+	
+	for (int i = 0; i < ptr_livretCout[i]->getCompteur(); i++) {
 		delete ptr_livretCout[i];
 	}
+	auRevoir();
 }
 
 //===============================Core Functions=============================================================
 void coutLocation(Cout* ptr_livret[250], int& index) {
-	int espaceReq = 0;
-	int cout = 213;
-	
-	ptr_livret[index] = new Location(espaceReq, cout);
-	index++;
+	int espaceReq = -1;
+	int taux = -1;
+	std::string nom = "nope";
+	bool sortir = false;
+
+	while (!sortir) {
+
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                              ASSISTANT CREATION COUT DE LOCATION                          |\n"
+			<< "|                                                                                           |\n"
+			<< std::endl;
+
+		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cin >> nom;
+		cinChecked();
+
+
+		std::cout << "Entrez le l'espace requis en metre carree pour la machine  : " << std::endl;
+		std::cin >> espaceReq;
+		cinChecked();
+
+
+		std::cout << "Entrez le taux de facturation en sous (Exemple: pour 0.50$ dollars ecrire 50)  : " << std::endl;
+		std::cin >> taux;
+		cinChecked();
+
+		if (espaceReq == 0 || taux == 0 || nom == "nope") messageErreur();
+
+		else {
+			ptr_livret[index] = new Location(espaceReq, taux, nom);
+			sortir = true;
+		}
+	}
 }
 void coutElectricity(Cout* ptr_livret[250], int& index) {
-	int amperage = 5500;
-	int voltage = 0;
-	int cout = 2145;
+	std::string nom = "nope";
+	int amperage = -1;
+	int voltage = -1;
+	int taux = -1;
+	bool sortir = false;
 
-	ptr_livret[index] = new Electricity(amperage, voltage, cout);
-	index++;
+	while (!sortir) {
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                              ASSISTANT CREATION COUT EN ELECTRICITE                       |\n"
+			<< "|                                                                                           |\n"
+			<< std::endl;
+
+		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cin >> nom;
+		cinChecked();
+
+		std::cout << "Entrez le nombre d'amperes requis au fonctionnement de la machine  : " << std::endl;
+		std::cin >> amperage;
+		cinChecked();
+
+		std::cout << "Entrez le voltage d'operation de la machine : " << std::endl;
+		std::cin >> voltage;
+		cinChecked();
+
+		std::cout << "Entrez le taux de facturation en sous (Exemple: pour 0.50$ dollars ecrire 50)  : " << std::endl;
+		std::cin >> taux;
+		cinChecked();
+
+		if (amperage == 0 || voltage == 0 || taux == 0 || nom == "nope") messageErreur();
+
+		else {
+			ptr_livret[index] = new Electricity(amperage, voltage, taux, nom);
+			sortir = true;
+		}
+	}
 }
 
 void coutHydro(Cout* ptr_livret[250], int& index) {
-	float debit = 0;
-	int cout = 9;
+	float debit = -1;
+	int taux = -1;
+	std::string nom = "nope";
+	bool sortir = false;
 
-	ptr_livret[index] = new Hydro(debit, cout);
-	index++;
+	while (!sortir) {
+
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                              ASSISTANT CREATION COUT EAU                                  |\n"
+			<< "|                                                                                           |\n"
+			<< std::endl;
+
+		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cin >> nom;
+		cinChecked();
+
+		std::cout << "Entrez le debit en Litre par seconde : " << std::endl;
+		std::cin >> debit;
+		cinChecked();
+
+		std::cout << "Entrez le taux de facturation en sous (Exemple: pour 0.50$ dollars ecrire 50)  : " << std::endl;
+		std::cin >> taux;
+		cinChecked();
+		if (debit == 0 || taux == 0 || nom == "nope") messageErreur();
+
+		else {
+			ptr_livret[index] = new Hydro(debit, taux, nom);
+			sortir = true;	
+		}
+	}
 }
 
 //===============================LOGISTIQUE=================================================================
@@ -105,7 +209,7 @@ void auRevoir() {
 }
 int menuPrinc() {
 	bool sortir = false;
-	int choix=-1;
+	int choix = -1;
 	do
 	{
 		std::cout
@@ -131,6 +235,7 @@ int menuPrinc() {
 		}
 		else {
 			messageErreur();
+			continuer();
 		}
 	} while (!sortir);
 
@@ -152,4 +257,11 @@ void messageErreur() {
 void continuer() {
 	std::cout << "\n\n		Faites entree pour continuer" << std::endl;
 	std::cin.get();
+}
+
+void cinChecked(){
+	if (std::cin.fail()) {
+		std::cin.clear();
+	}
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
