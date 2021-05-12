@@ -5,8 +5,8 @@
 class Cout
 {
 protected:
-	int taux; // (taux location 30 jours en cents; cents/KwH; cents/L )
-	double prix;  //prix calculé par la fonction Calcul() pour 1 journée
+	int taux=0; // (taux location 30 jours en cents; cents/KwH; cents/L )
+	double prix=0;  //prix calculé par la fonction Calcul() pour 1 journée
 	static int compteur;
 	std::string nom;
 	std::string type;
@@ -21,6 +21,6 @@ public:
 	int getCompteur();
 	std::string getNom();
 	std::string getType();
-
+	double multiplierPrix(int jour);
 };
 

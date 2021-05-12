@@ -6,70 +6,49 @@
 #include "Hydro.hpp"
 #include "Electricity.hpp"
 #include "Location.hpp"
+#include "Machine.hpp"
 
-void cinChecked();
-void coutLocation(Cout* ptr_livret[250], int& index);
-void coutElectricity(Cout* ptr_livret[250], int& index);
-void coutHydro(Cout* ptr_livret[250], int& index);
+int menuInitial(Machine* ptr_liste_machines[250], int& index_liste);
+int menuPrincipal(Machine* ptr_liste_machines[250], int& index_liste);
+int menuAjouter();
+void ajouterCout(Cout* ptr_livretCout[250], int& index_livret, int choix);
+void coutLocation(Cout* ptr_livret[250], int& index_livret);
+void coutElectricity(Cout* ptr_livret[250], int& index_livret);
+void coutHydro(Cout* ptr_livret[250], int& index_livret);
+
 void auRevoir();
 void messageErreur();
-int menuPrinc();
 void continuer();
+void cinChecked();
+
 
 int main() {
-	double prix;
+	//double prix;
 	Cout* ptr_livretCout[250];
-	int indexLivret = 0;
+	int index_livret = 0;
+	Machine* ptr_liste_machines[250];
+	int index_liste = 0;
 	int choix = -1;
 	bool quitter = false;
 
-	/*coutLocation(ptr_livretCout, indexLivret);
+	choix = menuInitial(ptr_liste_machines, index_liste);
 	
-	indexLivret = (ptr_livretCout[0]->getCompteur()) ;
-
-
-	coutElectricity(ptr_livretCout, indexLivret);
-	indexLivret = (ptr_livretCout[0]->getCompteur()) ;
-
-	coutHydro(ptr_livretCout, indexLivret);
-	indexLivret = (ptr_livretCout[0]->getCompteur()) ;*/
-
-
 	do {
-		std::cout << indexLivret << std::endl;
-		indexLivret = (ptr_livretCout[0]->getCompteur());
-		std::cout << indexLivret << std::endl;
-		std::cout << ptr_livretCout[0]->getCompteur() << std::endl;
+		index_livret = ptr_livretCout[0]->getCompteur();
+		index_liste = ptr_liste_machines[0]->getCompteur();
 
-		for (int i = 0; i < indexLivret; i++) {
+		if (index_liste != 0)choix=menuPrincipal(ptr_liste_machines,index_liste);
+
+		for (int i = 0; i < index_livret; i++) {
 			std::cout << "=======================================================" << std::endl;
 			std::cout << ptr_livretCout[i]->getNom() << std::endl;
 			std::cout << ptr_livretCout[i]->getCout() << std::endl;
 			std::cout << ptr_livretCout[i]->getType() << std::endl;
 			std::cout << ptr_livretCout[i]->getPrix() << std::endl;
 		}
-
 		continuer();
-		choix = menuPrinc();
-
-		switch (choix) {
-		case 1:
-			coutLocation(ptr_livretCout, indexLivret);
-			break;
-		case 2:
-			coutElectricity(ptr_livretCout, indexLivret);
-			break;
-		case 3:
-			coutHydro(ptr_livretCout, indexLivret);
-			break;
-		case 0:
-			quitter = true;
-			break;
-		default:
-			messageErreur;
-			break;
-		}
-
+		choix = menuAjouter();
+		ajouterCout(ptr_livretCout,index_livret,choix);
 
 	} while (!quitter);
 	
@@ -80,6 +59,110 @@ int main() {
 }
 
 //===============================Core Functions=============================================================
+int menuInitial(Machine* ptr_liste_machines[250], int& index_liste) {
+	bool sortir = false;
+	int choix = -1;
+	do
+	{
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                                                                                           |\n"
+			<< "|    Ajouter une nouvelle machine                                   FAITES LE 1             |\n"
+			<< "|                                                                                           |\n"
+			<< "|                                                                                           |\n"
+			<< "|                                                                                           |\n"
+			<< "|                                                                                           |\n"
+			<< "|    Pour quitter                                                   FAITES LE 0             |\n"
+			<< "|                                                                                           |\n"
+			<< "============================================================================================="
+			<< std::endl;
+
+		std::cin >> choix;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			choix = -1;
+		}
+		if (choix == 1 || choix == 0) {
+			sortir = true;
+		}
+		else {
+			messageErreur();
+			continuer();
+		}
+	} while (!sortir);
+
+	return choix;
+}
+int menuPrincipal(Machine* ptr_liste_machines[250], int& index_liste) {
+	bool sortir = false;
+	int choix = -1;
+	do
+	{
+		std::cout
+			<< "=============================================================================================\n"
+			<< "                                     "<< ptr_liste_machines[0]->getNom()<<"                                       \n"
+			<< "|                                                                                           |\n"
+			<< "|    Ajouter une nouvelle machine                                   FAITES LE 1             |\n"
+			<< "|                                                                                           |\n"
+			<< "|    Ajouter une depense a la machine actuelle                      FAITES LE 2             |\n"
+			<< "|                                                                                           |\n"
+			<< "|                                                                                           |\n"
+			<< "|    Pour quitter                                                   FAITES LE 0             |\n"
+			<< "|                                                                                           |\n"
+			<< "============================================================================================="
+			<< std::endl;
+
+		std::cin >> choix;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			choix = -1;
+		}
+		if (choix == 1 || choix == 2 || choix == 0) {
+			sortir = true;
+		}
+		else {
+			messageErreur();
+			continuer();
+		}
+	} while (!sortir);
+
+	return choix;
+}
+int menuAjouter() {
+	bool sortir = false;
+	int choix = -1;
+	do
+	{
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                        ASSISTANT AJOUT DE DEPENSE                                         |\n"
+			<< "|                                                                                           |\n"
+			<< "|    Ajouter un cout de Location                                    FAITES LE 1             |\n"
+			<< "|    Ajouter un cout d'electricite                                  FAITES LE 2             |\n"
+			<< "|    Ajouter un cout de consommation d'eau                          FAITES LE 3             |\n"
+			<< "|                                                                                           |\n"
+			<< "|                                                                                           |\n"
+			<< "|    Pour quitter vers le menu principal                            FAITES LE 0             |\n"
+			<< "|                                                                                           |\n"
+			<< "============================================================================================="
+			<< std::endl;
+
+		std::cin >> choix;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			choix = -1;
+		}
+		if (choix == 1 || choix == 2 || choix == 3 || choix == 0) {
+			sortir = true;
+		}
+		else {
+			messageErreur();
+			continuer();
+		}
+	} while (!sortir);
+
+	return choix;
+}
 void coutLocation(Cout* ptr_livret[250], int& index) {
 	int espaceReq = -1;
 	int taux = -1;
@@ -94,12 +177,12 @@ void coutLocation(Cout* ptr_livret[250], int& index) {
 			<< "|                                                                                           |\n"
 			<< std::endl;
 
-		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cout << "Entrez le nom de cette depense : " << std::endl;
 		std::cin >> nom;
 		cinChecked();
 
 
-		std::cout << "Entrez le l'espace requis en metre carree pour la machine  : " << std::endl;
+		std::cout << "Entrez l'espace requis en metre carree qu'ocupera ce module  : " << std::endl;
 		std::cin >> espaceReq;
 		cinChecked();
 
@@ -130,7 +213,7 @@ void coutElectricity(Cout* ptr_livret[250], int& index) {
 			<< "|                                                                                           |\n"
 			<< std::endl;
 
-		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cout << "Entrez le nom de cette depense : " << std::endl;
 		std::cin >> nom;
 		cinChecked();
 
@@ -154,7 +237,6 @@ void coutElectricity(Cout* ptr_livret[250], int& index) {
 		}
 	}
 }
-
 void coutHydro(Cout* ptr_livret[250], int& index) {
 	float debit = -1;
 	int taux = -1;
@@ -169,7 +251,7 @@ void coutHydro(Cout* ptr_livret[250], int& index) {
 			<< "|                                                                                           |\n"
 			<< std::endl;
 
-		std::cout << "Entrez le nom de cette machine : " << std::endl;
+		std::cout << "Entrez le nom de cette depense : " << std::endl;
 		std::cin >> nom;
 		cinChecked();
 
@@ -186,6 +268,25 @@ void coutHydro(Cout* ptr_livret[250], int& index) {
 			ptr_livret[index] = new Hydro(debit, taux, nom);
 			sortir = true;	
 		}
+	}
+}
+void ajouterCout(Cout* ptr_livretCout[250], int& indexLivret,int choix) {
+	
+	switch (choix) {
+	case 1:
+		coutLocation(ptr_livretCout, indexLivret);
+		break;
+	case 2:
+		coutElectricity(ptr_livretCout, indexLivret);
+		break;
+	case 3:
+		coutHydro(ptr_livretCout, indexLivret);
+		break;
+	case 0:
+		break;
+	default:
+		messageErreur();
+		break;
 	}
 }
 
@@ -206,40 +307,6 @@ void auRevoir() {
 		<< "|  |    | |  |\n"
 		<< "|__|____|_|__|@Par : Francis Boudreault // Ciao~~ Ciao~~"
 		<< std::endl;
-}
-int menuPrinc() {
-	bool sortir = false;
-	int choix = -1;
-	do
-	{
-		std::cout
-			<< "=============================================================================================\n"
-			<< "|                           MENU PRINCIPAL                                                  |\n"
-			<< "|                                                                                           |\n"
-			<< "|    Ajouter un cout de Location                                    FAITES LE 1             |\n"
-			<< "|    Ajouter un cout d'electricite                                  FAITES LE 2             |\n"
-			<< "|    Ajouter un cout de consommation d'eau                          FAITES LE 3             |\n"
-			<< "|    Pour quitter                                                   FAITES LE 0             |\n"
-			<< "|                                                                                           |\n"
-			<< "============================================================================================="
-			<< std::endl;
-
-		std::cin >> choix;
-		if (std::cin.fail()) {
-			std::cin.clear();
-			choix = -1;
-		}
-
-		if (choix == 1 || choix == 2 || choix == 3 || choix == 0) {
-			sortir = true;
-		}
-		else {
-			messageErreur();
-			continuer();
-		}
-	} while (!sortir);
-
-	return choix;
 }
 void messageErreur() {
 	std::cout << "\n\n\n\n\n"

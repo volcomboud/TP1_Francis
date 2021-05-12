@@ -37,6 +37,11 @@ std::string Cout::getNom() {
 std::string Cout::getType() {
 	return this->type;
 }
+double Cout::multiplierPrix(int jour) {
+	double resultat = this->prix * jour;
+	return resultat;
+}
+
 
 
 
