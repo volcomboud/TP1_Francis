@@ -25,9 +25,8 @@ void messageErreur();
 void continuer();
 void cinChecked();
 
-
 int main() {
-	//double prix;
+	//================================================DECLARATION DES VARIABLES==========================================
 	Cout* ptr_livretCout[250]{ nullptr };
 	int index_livret = 0;
 	Machine* ptr_liste_machines[250]{ nullptr };
@@ -35,9 +34,10 @@ int main() {
 	int choix = -1;
 	bool quitter = false;
 
-	while ((ptr_liste_machines[0]->getCompteur()!=1) xor (choix==0)){
+	//=========================PREMIERE INITIATION==================================================================
+	while ((ptr_liste_machines[0]->getCompteur() != 1) xor (choix == 0)) {
 		choix = menuInitial(ptr_liste_machines, index_liste);
-		
+
 		if (choix == 4) {
 			ajouterElement(ptr_livretCout, index_livret, choix, ptr_liste_machines, index_liste);
 		}
@@ -48,47 +48,8 @@ int main() {
 			messageErreur();
 		}
 	}
-	
-	while (!quitter){
-
-	//	if (ptr_livretCout[0]->getCompteur() == 0) {
-	//		index_livret = (ptr_livretCout[0]->getCompteur()); //Ces deux lignes assurent que les index restent a jour (45,46)
-	//	}
-	//	else
-	//		index_liste = (ptr_livretCout[0]->getCompteur()) - 1;
-		//index_livret = (ptr_livretCout[0]->getCompteur()); //Ces deux lignes assurent que les index restent a jour (45,46)
-	
-		//index_liste = (ptr_liste_machines[0]->getCompteur());
-
-		//choix=menuPrincipal(ptr_liste_machines,index_livret);
-
-	
-
-			for (int i = 0; i < index_liste; i++) {
-				std::cout << "============================================================================== " << std::endl;
-				std::cout << ptr_liste_machines[i]->getNom() << std::endl;
-				std::cout << "#######" << std::endl;
-
-				if (ptr_liste_machines[i]->getLocation() != nullptr) {
-					std::cout << ptr_liste_machines[i]->getLocation()->getNom() << std::endl;
-					std::cout << ptr_liste_machines[i]->getLocation()->getCout() << std::endl;
-					std::cout << ptr_liste_machines[i]->getLocation()->getType() << std::endl;
-					std::cout << ptr_liste_machines[i]->getLocation()->getPrix() << std::endl;
-				}
-				if (ptr_liste_machines[i]->getElectricity() != nullptr) {
-					std::cout << ptr_liste_machines[i]->getElectricity()->getNom() << std::endl;
-					std::cout << ptr_liste_machines[i]->getElectricity()->getCout() << std::endl;
-					std::cout << ptr_liste_machines[i]->getElectricity()->getType() << std::endl;
-					std::cout << ptr_liste_machines[i]->getElectricity()->getPrix() << std::endl;
-				}
-				if (ptr_liste_machines[i]->getHydro() != nullptr) {
-					std::cout << ptr_liste_machines[i]->getHydro()->getNom() << std::endl;
-					std::cout << ptr_liste_machines[i]->getHydro()->getCout() << std::endl;
-					std::cout << ptr_liste_machines[i]->getHydro()->getType() << std::endl;
-					std::cout << ptr_liste_machines[i]->getHydro()->getPrix() << std::endl;
-				}
-			}
-		
+	//=================================INITIATION PRINCIPAL====================================================================================
+	while (!quitter) {
 		choix = menuPrincipal(ptr_liste_machines, index_liste);
 
 		switch (choix) {
@@ -101,8 +62,8 @@ int main() {
 			ajouterElement(ptr_livretCout, index_livret, choix, ptr_liste_machines, index_liste);
 			break;
 		case 3:
-			choix = menuAffichage(ptr_liste_machines,index_liste);
-			calculerCompteRendu(ptr_liste_machines, index_liste,choix);
+			choix = menuAffichage(ptr_liste_machines, index_liste);
+			calculerCompteRendu(ptr_liste_machines, index_liste, choix);
 			break;
 		case 0:
 			quitter = true;
@@ -112,9 +73,8 @@ int main() {
 			messageErreur();
 			break;
 		}
+	}
 
-	} 
-	
 	//==========================SORTIE DE PROGRAMME + DELETES================================================
 	for (int i = 0; i < ptr_livretCout[i]->getCompteur(); i++) {
 		delete ptr_livretCout[i];
@@ -125,14 +85,14 @@ int main() {
 	auRevoir();
 }
 
-//===============================Core Functions=============================================================
+//===============================fONCTION()&&PROCEDURE ADAPTE AU LOGICIELLE=============================================================
 void calculerCompteRendu(Machine* ptr_liste_machines[250], int& index_liste, int choix) {
 	int nb_jour = 0;
 	double prix_total = 0;
 
 	if (choix == 0)choix = -1;
 	else choix = choix - 1;
-
+	std::cout << "\n\n\n\n\n\n\n\n\n";
 	std::cout << "Entrer le nombre de jour pour votre location de machine. Le prix sera calcule en consequence" << std::endl;
 	std::cin >> nb_jour;
 	if (std::cin.fail()) {
@@ -141,63 +101,80 @@ void calculerCompteRendu(Machine* ptr_liste_machines[250], int& index_liste, int
 	}
 
 	if (choix == -1) {
-		for (int i = 0; i < index_liste+1; i++) {
-			std::cout <<"                       MACHINE : "<< ptr_liste_machines[i]->getNom() << std::endl;
+		std::cout << "\n\n\n\n\n\n\n\n\n";
+		for (int i = 0; i < index_liste + 1; i++) {
+			std::cout << "\n                       MACHINE : " << ptr_liste_machines[i]->getNom() << std::endl;
 			std::cout << "#######                                                    #######" << std::endl;
 
 			if (ptr_liste_machines[i]->getLocation() != nullptr) {
-			
-					std::cout << ptr_liste_machines[i]->getLocation()->getNom() << " : "
-						<< ptr_liste_machines[i]->getLocation()->multiplierPrix(nb_jour) << " $" << std::endl;
+				std::cout << "Type : " << ptr_liste_machines[i]->getLocation()->getType() << "         ";
+				std::cout << ptr_liste_machines[i]->getLocation()->getNom() << " : "
+					<< ptr_liste_machines[i]->getLocation()->multiplierPrix(nb_jour) << " $" << std::endl;
 
-					prix_total = prix_total + ptr_liste_machines[i]->getLocation()->multiplierPrix(nb_jour);	
+				prix_total = prix_total + ptr_liste_machines[i]->getLocation()->multiplierPrix(nb_jour);
 			}
 			if (ptr_liste_machines[i]->getElectricity() != nullptr) {
+				std::cout << "Type : " << ptr_liste_machines[i]->getElectricity()->getType() << "      ";
 				std::cout << ptr_liste_machines[i]->getElectricity()->getNom() << " : "
 					<< ptr_liste_machines[i]->getElectricity()->multiplierPrix(nb_jour) << " $" << std::endl;
 				prix_total = prix_total + ptr_liste_machines[i]->getElectricity()->multiplierPrix(nb_jour);
 			}
 			if (ptr_liste_machines[i]->getHydro() != nullptr) {
-				std::cout << ptr_liste_machines[i]->getHydro()->getNom() <<" : "
-						  << ptr_liste_machines[i]->getHydro()->multiplierPrix(nb_jour)<<" $" << std::endl;
+				std::cout << "Type : " << ptr_liste_machines[i]->getHydro()->getType() << "              ";
+				std::cout << ptr_liste_machines[i]->getHydro()->getNom() << " : "
+					<< ptr_liste_machines[i]->getHydro()->multiplierPrix(nb_jour) << " $" << std::endl;
 				prix_total = prix_total + ptr_liste_machines[i]->getHydro()->multiplierPrix(nb_jour);
 			}
 		}
-		std::cout <<"--------------------"<<std::endl;
-		std::cout << "Cout total = "<<prix_total<< " $ pour " << nb_jour <<" jours "<< std::endl;
+		std::cout << "--------------------" << std::endl;
+		std::cout << "Cout total = " << prix_total << " $ pour " << nb_jour << " jours " << std::endl;
+		continuer();
 	}
 	else {
+		std::cout << "\n\n\n\n\n\n\n\n\n";
 		std::cout << "                       MACHINE : " << ptr_liste_machines[choix]->getNom() << std::endl;
 		std::cout << "#######                                                    #######" << std::endl;
 
 		if (ptr_liste_machines[choix]->getLocation() != nullptr) {
+			std::cout << "Type : " << ptr_liste_machines[choix]->getLocation()->getType() << "         ";
 			std::cout << ptr_liste_machines[choix]->getLocation()->getNom() << " : "
 				<< ptr_liste_machines[choix]->getLocation()->multiplierPrix(nb_jour) << " $" << std::endl;
 			prix_total = prix_total + ptr_liste_machines[choix]->getLocation()->multiplierPrix(nb_jour);
-
 		}
 		if (ptr_liste_machines[choix]->getElectricity() != nullptr) {
+			std::cout << "Type : " << ptr_liste_machines[choix]->getElectricity()->getType() << "      ";
 			std::cout << ptr_liste_machines[choix]->getElectricity()->getNom() << " : "
 				<< ptr_liste_machines[choix]->getElectricity()->multiplierPrix(nb_jour) << " $" << std::endl;
 			prix_total = prix_total + ptr_liste_machines[choix]->getElectricity()->multiplierPrix(nb_jour);
 		}
 		if (ptr_liste_machines[choix]->getHydro() != nullptr) {
+			std::cout << "Type : " << ptr_liste_machines[choix]->getHydro()->getType() << "              ";
 			std::cout << ptr_liste_machines[choix]->getHydro()->getNom() << " : "
 				<< ptr_liste_machines[choix]->getHydro()->multiplierPrix(nb_jour) << " $" << std::endl;
 			prix_total = prix_total + ptr_liste_machines[choix]->getHydro()->multiplierPrix(nb_jour);
 		}
 		std::cout << "--------------------" << std::endl;
 		std::cout << "Cout total = " << prix_total << " $ pour " << nb_jour << " jours " << std::endl;
+		continuer();
 	}
-		
 }
 
 int menuAffichage(Machine* ptr_liste_machines[250], int& index_liste) {
 	int choix = -1;
 
 	while (choix == -1) {
+		std::cout << "\n\n\n\n\n\n\n\n\n";
+		std::cout << "\n\n\n\n\n\n\n\n\n";
+		std::cout
+			<< "=============================================================================================\n"
+			<< "|                              ASSISTANT COMPTE-RENDU                                       |\n"
+			<< "|                                                                                           |\n"
+			<< "| Liste des Machines repertoriee : "
+			<< std::endl;
+
 		afficherNomMachine(ptr_liste_machines, index_liste);
-		std::cout << "Entrer le numero de la machine que vous voulez detailler.         FAITES LE 0 POUR TOUS LES MACHINES"
+		std::cout << "\n\nEntrer le numero de la machine que vous voulez detailler.\n"
+			      << "                                                          **FAITES LE 0 POUR TOUS LES MACHINES"
 			<< std::endl;
 		std::cin >> choix;
 		if (std::cin.fail()) {
@@ -209,8 +186,9 @@ int menuAffichage(Machine* ptr_liste_machines[250], int& index_liste) {
 	return choix;
 }
 void afficherNomMachine(Machine* ptr_liste_machines[250], int& index_liste) {
-	for (int i = 0; i < index_liste+1; i++) {
-		std::cout << "#" << i+1 << " : ";
+	
+	for (int i = 0; i < index_liste + 1; i++) {
+		std::cout << "                                   #" << i + 1 << " : ";
 		std::cout << ptr_liste_machines[i]->getNom() << std::endl;
 	}
 }
@@ -255,7 +233,7 @@ int menuPrincipal(Machine* ptr_liste_machines[250], int& index_liste) {
 	{
 		std::cout
 			<< "=============================================================================================\n"
-			<< "                                     "<< ptr_liste_machines[index_liste]->getNom()<<"                                       \n"
+			<< "                                     " << ptr_liste_machines[index_liste]->getNom() << "                                       \n"
 			<< "|                                                                                           |\n"
 			<< "|    Ajouter une nouvelle machine                                   FAITES LE 1             |\n"
 			<< "|                                                                                           |\n"
@@ -273,7 +251,7 @@ int menuPrincipal(Machine* ptr_liste_machines[250], int& index_liste) {
 			std::cin.clear();
 			choix = -1;
 		}
-		if (choix == 1 || choix == 2 || choix == 0 || choix==3) {
+		if (choix == 1 || choix == 2 || choix == 0 || choix == 3) {
 			sortir = true;
 		}
 		else {
@@ -325,7 +303,6 @@ void coutLocation(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines
 	bool sortir = false;
 
 	while (!sortir) {
-
 		std::cout
 			<< "=============================================================================================\n"
 			<< "|                              ASSISTANT CREATION COUT DE LOCATION                          |\n"
@@ -336,11 +313,9 @@ void coutLocation(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines
 		std::cin >> nom;
 		cinChecked();
 
-
 		std::cout << "Entrez l'espace requis en metre carree qu'ocupera ce module  : " << std::endl;
 		std::cin >> espaceReq;
 		cinChecked();
-
 
 		std::cout << "Entrez le taux de facturation en sous (Exemple: pour 0.50$ dollars ecrire 50)  : " << std::endl;
 		std::cin >> taux;
@@ -351,11 +326,11 @@ void coutLocation(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines
 		else {
 			std::cout << ptr_liste_machines[index_liste]->getNom() << std::endl;
 
-			index= (ptr_livret[0]->getCompteur());//iciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+			index = (ptr_livret[0]->getCompteur());//iciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
 			ptr_livret[index] = new Location(espaceReq, taux, nom);
-			ptr_liste_machines[index_liste]->setLocationMash((Location*)(ptr_livret [index]));
-			std::cout << ptr_liste_machines[index_liste]->getLocation()<<std::endl;
+			ptr_liste_machines[index_liste]->setLocationMash((Location*)(ptr_livret[index]));
+			std::cout << ptr_liste_machines[index_liste]->getLocation() << std::endl;
 			sortir = true;
 		}
 	}
@@ -398,8 +373,6 @@ void coutElectricity(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machi
 			ptr_livret[index] = new Electricity(amperage, voltage, taux, nom);
 			ptr_liste_machines[index_liste]->setElectrictyMash((Electricity*)(ptr_livret[index]));
 			sortir = true;
-
-			
 		}
 	}
 }
@@ -410,7 +383,6 @@ void coutHydro(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines[25
 	bool sortir = false;
 
 	while (!sortir) {
-
 		std::cout
 			<< "=============================================================================================\n"
 			<< "|                              ASSISTANT CREATION COUT EAU                                  |\n"
@@ -431,17 +403,15 @@ void coutHydro(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines[25
 		if (debit == 0 || taux == 0 || nom == "nope") messageErreur();
 
 		else {
-
 			index = (ptr_livret[0]->getCompteur());//iciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
 			ptr_livret[index] = new Hydro(debit, taux, nom);
 			ptr_liste_machines[index_liste]->setHydroMash((Hydro*)(ptr_livret[index]));
-			sortir = true;		
+			sortir = true;
 		}
 	}
 }
-void ajouterElement(Cout* ptr_livretCout[250], int& indexLivret,int choix, Machine* ptr_liste_machines[250], int& index_liste) {
-	
+void ajouterElement(Cout* ptr_livretCout[250], int& indexLivret, int choix, Machine* ptr_liste_machines[250], int& index_liste) {
 	switch (choix) {
 	case 1:
 		coutLocation(ptr_livretCout, indexLivret, ptr_liste_machines, index_liste);
@@ -453,7 +423,7 @@ void ajouterElement(Cout* ptr_livretCout[250], int& indexLivret,int choix, Machi
 		coutHydro(ptr_livretCout, indexLivret, ptr_liste_machines, index_liste);
 		break;
 	case 4:
-		ajouterMachine(ptr_liste_machines,index_liste);
+		ajouterMachine(ptr_liste_machines, index_liste);
 		break;
 	default:
 		messageErreur();
@@ -465,7 +435,6 @@ void ajouterMachine(Machine* ptr_liste_machines[250], int& index_liste) {
 	bool sortir = false;
 
 	while (!sortir) {
-
 		std::cout
 			<< "=============================================================================================\n"
 			<< "|                              ASSISTANT CREATION MACHINE                                   |\n"
@@ -478,7 +447,6 @@ void ajouterMachine(Machine* ptr_liste_machines[250], int& index_liste) {
 		if (nom == "nope") messageErreur();
 
 		else {
-
 			index_liste = (ptr_liste_machines[0]->getCompteur());// ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 			ptr_liste_machines[index_liste] = new Machine(nom);
 			sortir = true;
@@ -488,12 +456,11 @@ void ajouterMachine(Machine* ptr_liste_machines[250], int& index_liste) {
 
 //===============================LOGISTIQUE=================================================================
 /**
- * Toutes les fonctions() ci-dessous amenent des fonctionnalitees generals aux travers du programme.Rien ici
+ * Toutes les fonctions() ci-dessous amenent des fonctionnalitees general aux travers du programme.Rien ici
  * n'est specialise.
  *
  */
 void auRevoir() {
-
 	std::cout << " \n\n\n\n\n"
 		<< " _.........._ \n"
 		<< "| |Merci de| |\n"
@@ -522,10 +489,9 @@ void continuer() {
 	std::cout << "\n\n		Faites entree pour continuer" << std::endl;
 	std::cin.get();
 	std::cin.get();
-
 }
 
-void cinChecked(){
+void cinChecked() {
 	if (std::cin.fail()) {
 		std::cin.clear();
 	}
