@@ -324,13 +324,11 @@ void coutLocation(Cout* ptr_livret[250], int& index, Machine* ptr_liste_machines
 		if (espaceReq == 0 || taux == 0 || nom == "nope") messageErreur();
 
 		else {
-			std::cout << ptr_liste_machines[index_liste]->getNom() << std::endl;
 
 			index = (ptr_livret[0]->getCompteur());//iciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
 			ptr_livret[index] = new Location(espaceReq, taux, nom);
 			ptr_liste_machines[index_liste]->setLocationMash((Location*)(ptr_livret[index]));
-			std::cout << ptr_liste_machines[index_liste]->getLocation() << std::endl;
 			sortir = true;
 		}
 	}
