@@ -6,12 +6,12 @@ Machine::~Machine(){
 }
 Machine::Machine(std::string nom) {
 	this->nom = nom;
-	compteur++;
+	this->compteur++;
 }
-void Machine::setElectrictyMash(Electricity* electrique) {
+void Machine::setElectrictyMash(Cout* electrique) {
 	this->electrique = electrique;
 }
-void Machine::setHydroMash(Hydro* eau) {
+void Machine::setHydroMash(Cout* eau) {
 	this->eau = eau;
 }
 void Machine::setLocationMash(Location* location) {
@@ -22,5 +22,14 @@ std::string Machine::getNom() {
 }
 int Machine::getCompteur() {
 	return this->compteur;
+}
+Location* Machine::getLocation() {
+	return this->location;
+}
+Cout* Machine::getHydro() {
+	return this->eau;
+}
+Cout* Machine::getElectricity() {
+	return this->electrique;
 }
 

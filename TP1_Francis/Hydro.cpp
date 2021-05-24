@@ -20,11 +20,9 @@ Hydro::~Hydro(){
 }
 double Hydro::calcul() {
 	double prixCalc;
-	prixCalc = this->debit * 86400.0 * 1.0 * ((this->taux) / 100.0);
+	prixCalc = (this->debit * 86400.0 * 1.0 * ((this->taux) / 100.0))/100;
 
-	this->prix = prixCalc;
 	return prixCalc;
-
 }
 int Hydro::getCout() {
 	return this->taux;

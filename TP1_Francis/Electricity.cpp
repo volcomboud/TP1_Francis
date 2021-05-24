@@ -22,9 +22,8 @@ Electricity::~Electricity() {
 double Electricity::calcul() {
 	double prixCalc;
 	
-	prixCalc = (((double)this->amperage * this->voltage)*this->amperage * 24.0 * 1.0 * this->taux)/1000;
-
-	this->prix = prixCalc;
+//	prixCalc = ((double)this->amperage*this->amperage * 24.0 * 1.0 * this->taux)/1000;
+	prixCalc = (double)((this->amperage * this->voltage) / 1000.0) * 24 * (taux / 100.0);
 	return prixCalc;
 
 }

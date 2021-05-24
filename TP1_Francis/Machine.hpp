@@ -11,17 +11,21 @@ class Machine
 {
 private:
 	std::string nom;
-	Electricity* electrique = nullptr;
-	Hydro* eau = nullptr;
-	Location* location = nullptr;
+	Cout* electrique = nullptr;
+	Cout* eau = nullptr;
+	Location* location=nullptr;
 	static int compteur;
 public:
 	~Machine();
 	Machine(std::string nom);
-	void setElectrictyMash(Electricity* electrique);
-	void setHydroMash(Hydro* eau);
+	void setElectrictyMash(Cout* electrique);
+	void setHydroMash(Cout* eau);
 	void setLocationMash(Location* location);
 	std::string getNom();
 	int getCompteur();
+	Location* getLocation();
+	Cout* getHydro();
+	Cout* getElectricity();
+
 };
 

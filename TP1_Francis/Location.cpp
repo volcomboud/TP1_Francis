@@ -17,13 +17,10 @@ Location::~Location() {
 double Location::calcul() { // 1 mois par défaut
 	double prixCalc;
 
-	prixCalc = ((double)this->taux * 1.0 * 30.0 * this->espaceReq)/ 100.0;
+	prixCalc = ((double)this->taux / 30 * this->espaceReq) / 100.0;
 
-	this->prix = prixCalc;
 	return prixCalc;
-
 }
 int Location::getCout() {
 	return this->taux;
 }
-
